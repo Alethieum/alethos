@@ -1,0 +1,59 @@
+AlethOS Software License Agreement
+
+Copyright (c) 2024 Alethieum. All rights reserved.
+
+ALETHIEUM NEURAL OS (AlethOS) - SOFTWARE LICENSE AGREEMENT
+
+This License Agreement ("Agreement") is between you ("Licensee") and Alethieum 
+("Licensor") regarding the AlethOS software ("Software").
+
+BY INSTALLING, ACCESSING OR USING THIS SOFTWARE, YOU AGREE TO BE BOUND BY THE 
+TERMS OF THIS LICENSE.
+
+1. GRANT OF LICENSE
+   Subject to the terms of this Agreement, Licensor grants you a limited, 
+   non-exclusive, non-transferable license to:
+   - Use the Software for personal, educational, and evaluation purposes
+   - Use the Software with valid Alethieum API credentials
+   - Develop applications that integrate with Alethieum services
+
+2. RESTRICTIONS
+   You may NOT:
+   - Use this Software for commercial purposes without a commercial license
+   - Redistribute, sell, lease, or sublicense the Software
+   - Modify, reverse engineer, or create derivative works
+   - Remove or alter any copyright, trademark, or proprietary notices
+   - Use the Software with non-Alethieum AI services without permission
+   - Extract or reuse the Software's neural orchestration algorithms
+
+3. COMMERCIAL USE
+   Commercial use requires a separate paid license from Alethieum.
+   Contact: licensing@alethieum.com
+
+4. ALETHIEUM API INTEGRATION
+   This Software is designed to work with Alethieum's AI infrastructure.
+   Use requires valid API credentials and compliance with Alethieum's Terms of Service.
+
+5. INTELLECTUAL PROPERTY
+   The Software contains proprietary neural architectures, agent orchestration 
+   systems, and AI coordination algorithms owned by Alethieum. All rights reserved.
+
+6. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+
+7. LIMITATION OF LIABILITY
+   IN NO EVENT SHALL ALETHIEUM BE LIABLE FOR ANY DAMAGES ARISING FROM USE OF 
+   THIS SOFTWARE.
+
+8. TERMINATION
+   This license terminates automatically if you breach any terms.
+   Upon termination, you must destroy all copies of the Software.
+
+9. GOVERNING LAW
+   This Agreement is governed by the laws of [Your Jurisdiction].
+
+For questions about licensing: contact@alethieum.com
+For commercial licensing: licensing@alethieum.com
+
+AlethOS - The Operating System for Digital AI
+Built by Alethieum with ❤️ for the future of autonomous intelligence.
