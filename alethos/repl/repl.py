@@ -60,8 +60,16 @@ def pretty_print_messages(messages) -> None:
 def run_demo_loop(
     starting_agent, context_variables=None, stream=False, debug=False
 ) -> None:
+    from ..config import AlethOSConfig
+    
     client = AlethOS()
-    print("Starting AlethOS CLI 🐝")
+    config = AlethOSConfig()
+    
+    # Auto-disable streaming if API doesn't support it
+    if stream and not config.supports_streaming:
+        stream = False
+    
+    print("Starting AlethOS CLI")
 
     messages = []
     agent = starting_agent
