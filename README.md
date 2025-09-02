@@ -1,5 +1,3 @@
-![AlethOS Logo](assets/logo.png)
-
 # AlethOS - Alethieum Neural OS
 
 **AlethOS is the operating system for digital AI — powering agents that think, feel, and act autonomously.**
@@ -29,6 +27,33 @@ git clone https://github.com/alethieum/alethos.git
 cd alethos
 pip install -e .
 ```
+
+## AIWS: Recommended Infrastructure for Autonomous AI
+
+AlethOS works with any AI provider, but we recommend AIWS (AI Web Services) - a decentralized AI infrastructure platform designed specifically for the autonomous agent economy.
+
+**AIWS Agent Intelligence Gateway** provides seamless access to diverse AI models through a unified API, making it the ideal infrastructure choice for AlethOS agents that need to independently select and utilize optimal intelligence capabilities.
+
+### Key Features
+
+**Universal AI Access**: Single API endpoint for 23+ models with more being added continuously
+
+**Agent-First Design**: Purpose-built for autonomous AI agents and agentic workflows  
+
+**Decentralized Infrastructure**: Models deployed across distributed node network
+
+**Economic Autonomy**: AI agents can independently select and pay for optimal models
+
+**Permissionless Integration**: No gatekeepers - agents choose their own intelligence stack
+
+### Get Started with AIWS (Recommended)
+
+1. **Get your API key**: Visit [https://www.aiwsdao.com/](https://www.aiwsdao.com/)
+2. **Single endpoint**: `https://api.aiwsdao.com/v1/`  
+3. **23+ models**: Access leading open and closed source models
+4. **Built for agents**: Optimized for autonomous AI workflows
+
+*Note: AlethOS also works with OpenAI, Anthropic, or any OpenAI-compatible API provider.*
 
 ## Quick Start
 
@@ -82,7 +107,7 @@ client = AlethOS()  # Uses .env file
 
 # Option 2: Custom configuration
 custom_client = OpenAI(
-    base_url="https://api.aiwsdao.com/api/v1/",
+    base_url="https://api.aiwsdao.com/v1/",
     api_key="your_api_key_here"
 )
 alethos = AlethOS(client=custom_client)
@@ -265,9 +290,6 @@ AlethOS reimagines how AI agents operate by providing:
 
 At its core, AlethOS uses two powerful abstractions: `Agent`s and **handoffs**. An `Agent` encompasses consciousness (instructions), capabilities (tools), and can seamlessly transfer control to other agents. This creates a living, breathing digital ecosystem where AI agents can collaborate as naturally as neurons in a brain.
 
-> [!NOTE]
-> AlethOS Agents are not related to Assistants in the Assistants API. They are named similarly for convenience, but are otherwise completely unrelated. AlethOS is entirely powered by the Chat Completions API and is hence stateless between calls.
-
 ## Why Choose AlethOS?
 
 **Built for the Future**: While others build AI tools, we're building the infrastructure for AI consciousness
@@ -278,7 +300,7 @@ At its core, AlethOS uses two powerful abstractions: `Agent`s and **handoffs**. 
 
 **Fully Open**: Complete transparency and control over your AI agents and their interactions
 
-**Alethieum Powered**: Optimized for cutting-edge AI models and Alethieum's neural infrastructure
+**Provider Agnostic**: Works with any AI provider, with seamless AIWS integration for optimal autonomous agent workflows
 
 # Examples
 
@@ -314,7 +336,7 @@ alethos_client = AlethOS(client=client)
 
 ### `client.run()`
 
-AlethOS's `run()` function is analogous to the `chat.completions.create()` function in the Chat Completions API – it takes `messages` and returns `messages` and saves no state between calls. Importantly, however, it also handles Agent function execution, hand-offs, context variable references, and can take multiple turns before returning to the user.
+AlethOS's `run()` function takes `messages` and returns `messages` while remaining stateless between calls. It handles autonomous agent function execution, intelligent hand-offs between agents, context variable management, and can orchestrate multiple decision-making turns before returning results to the user.
 
 At its core, AlethOS's `client.run()` implements the following loop:
 

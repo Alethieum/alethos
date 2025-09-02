@@ -15,7 +15,7 @@ class AlethOSConfig:
     
     def __init__(self):
         self.api_key = os.getenv("AIWS_API_KEY")
-        self.base_url = os.getenv("AIWS_BASE_URL", "https://api.aiwsdao.com/api/v1/")
+        self.base_url = os.getenv("AIWS_BASE_URL", "https://api.aiwsdao.com/v1/")
         self.default_model = os.getenv("AIWS_DEFAULT_MODEL", "aiws/gpt-oss-20b")
         # Disable streaming for AIWS API as it's not yet supported
         self.supports_streaming = self._check_streaming_support()
