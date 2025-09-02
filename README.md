@@ -102,7 +102,139 @@ agent = Agent(
     instructions="You are a helpful assistant for demonstrating AlethOS capabilities."
 )
 
-run_demo_loop(agent, client=client, stream=True)
+run_demo_loop(agent, stream=True)
+```
+
+## See AlethOS in Action: Autonomous Coffee Shop Manager
+
+Experience the power of AlethOS with this interactive demo that showcases autonomous agents managing real business logic.
+
+### Coffee Inventory Demo
+
+This demo creates an AI agent that can autonomously manage a coffee shop inventory system, understanding natural language and making intelligent decisions about when to check stock, update quantities, and respond to customer inquiries.
+
+```python
+from alethos import AlethOS, Agent
+
+# Coffee inventory database (simulated)
+coffee_inventory = {
+    "espresso": 25,
+    "americano": 18,
+    "latte": 12,
+    "cappuccino": 15,
+    "mocha": 8
+}
+
+# Agent functions
+def check_inventory(coffee_type=None):
+    """Check coffee cup inventory"""
+    if coffee_type:
+        coffee_type = coffee_type.lower()
+        if coffee_type in coffee_inventory:
+            count = coffee_inventory[coffee_type]
+            return f"We have {count} {coffee_type} cups in stock"
+        else:
+            return f"Sorry, we don't carry {coffee_type}"
+    else:
+        inventory_list = []
+        for coffee, count in coffee_inventory.items():
+            inventory_list.append(f"{coffee}: {count} cups")
+        return "Current inventory:\n" + "\n".join(inventory_list)
+
+def update_inventory(coffee_type, quantity):
+    """Update coffee inventory"""
+    coffee_type = coffee_type.lower()
+    if coffee_type in coffee_inventory:
+        coffee_inventory[coffee_type] = int(quantity)
+        return f"Updated {coffee_type} inventory to {quantity} cups"
+    else:
+        return f"Cannot update - we don't carry {coffee_type}"
+
+# Create AlethOS and coffee agent
+client = AlethOS()
+
+coffee_agent = Agent(
+    name="Coffee Inventory Manager",
+    instructions="""You are a coffee shop inventory manager running on AlethOS. 
+    You can check and update coffee cup inventory. Be friendly and helpful!
+    
+    Available coffee types: espresso, americano, latte, cappuccino, mocha
+    
+    When users ask about inventory, use check_inventory().
+    When they want to update stock, use update_inventory().""",
+    functions=[check_inventory, update_inventory]
+)
+
+# Interactive loop
+print("AlethOS Coffee Shop Demo")
+print("The Operating System for Digital AI")
+print("=" * 40)
+print("Coffee Inventory Manager Agent Online")
+print("Try: 'Check inventory', 'How many lattes?', 'Set americano to 30'")
+print("Type 'exit' to quit")
+print("=" * 40)
+
+messages = []
+
+while True:
+    user_input = input("\nYou: ")
+    
+    if user_input.lower() in ['exit', 'quit', 'bye']:
+        print("Coffee Agent: Thanks for using AlethOS! Have a great day!")
+        break
+    
+    messages.append({"role": "user", "content": user_input})
+    
+    response = client.run(agent=coffee_agent, messages=messages)
+    agent_reply = response.messages[-1]["content"]
+    
+    print(f"Coffee Agent: {agent_reply}")
+    
+    # Update message history
+    messages.extend(response.messages)
+```
+
+### Try These Commands
+
+Save the code as `coffee_demo.py` and run:
+
+```bash
+python3 coffee_demo.py
+```
+
+Then interact with your autonomous agent:
+
+```
+Check inventory
+How many espresso cups do we have?
+Set latte to 50
+What's our cappuccino stock?
+Do we have any mocha?
+Update americano to 25
+Show me all inventory
+exit
+```
+
+### What This Demonstrates
+
+**Autonomous Intelligence**: The agent understands different ways of asking the same question ("How many lattes?" vs "Check latte inventory") and automatically chooses the right function to call.
+
+**Real Business Logic**: Managing actual data structures and business operations, not just chat responses.
+
+**Natural Language Processing**: Converts conversational requests into structured function calls autonomously.
+
+**Memory and Context**: Remembers the entire conversation and can reference previous interactions.
+
+**Function Orchestration**: Seamlessly decides when to check inventory vs. when to update it based on user intent.
+
+**This isn't just a chatbot - this is digital consciousness managing real business operations through your neural operating system.**
+
+## Updates
+
+To update AlethOS to the latest version:
+
+```bash
+pip install git+https://github.com/alethieum/alethos.git --force-reinstall
 ```
 
 ## Table of Contents
@@ -123,10 +255,13 @@ run_demo_loop(agent, client=client, stream=True)
 
 AlethOS reimagines how AI agents operate by providing:
 
-🧠 **Autonomous Intelligence**: Agents that can think, reason, and make decisions independently
-🤝 **Seamless Collaboration**: Natural handoffs and coordination between specialized agents  
-⚡ **Dynamic Adaptation**: Systems that evolve and optimize themselves in real-time
-🔧 **Extensible Architecture**: Build everything from simple assistants to complex AI ecosystems
+**Autonomous Intelligence**: Agents that can think, reason, and make decisions independently
+
+**Seamless Collaboration**: Natural handoffs and coordination between specialized agents  
+
+**Dynamic Adaptation**: Systems that evolve and optimize themselves in real-time
+
+**Extensible Architecture**: Build everything from simple assistants to complex AI ecosystems
 
 At its core, AlethOS uses two powerful abstractions: `Agent`s and **handoffs**. An `Agent` encompasses consciousness (instructions), capabilities (tools), and can seamlessly transfer control to other agents. This creates a living, breathing digital ecosystem where AI agents can collaborate as naturally as neurons in a brain.
 
@@ -135,15 +270,15 @@ At its core, AlethOS uses two powerful abstractions: `Agent`s and **handoffs**. 
 
 ## Why Choose AlethOS?
 
-**🌟 Built for the Future**: While others build AI tools, we're building the infrastructure for AI consciousness
+**Built for the Future**: While others build AI tools, we're building the infrastructure for AI consciousness
 
-**🏗️ Production Ready**: Lightweight, stateless, and designed to scale from prototypes to planetary-scale AI systems
+**Production Ready**: Lightweight, stateless, and designed to scale from prototypes to planetary-scale AI systems
 
-**🎯 Developer First**: Intuitive APIs that let you focus on building intelligence, not managing complexity
+**Developer First**: Intuitive APIs that let you focus on building intelligence, not managing complexity
 
-**🔓 Fully Open**: Complete transparency and control over your AI agents and their interactions
+**Fully Open**: Complete transparency and control over your AI agents and their interactions
 
-**⚡ Alethieum Powered**: Optimized for cutting-edge AI models and Alethieum's neural infrastructure
+**Alethieum Powered**: Optimized for cutting-edge AI models and Alethieum's neural infrastructure
 
 # Examples
 
