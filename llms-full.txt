@@ -1,0 +1,418 @@
+# AlethOS - LLM Development Guide
+# The Operating System for Digital AI - Complete Reference for AI Coding Assistants
+
+## Overview
+AlethOS is the operating system for digital AI - powering agents that think, feel, and act autonomously. This guide helps LLMs assist developers in building autonomous AI agents.
+
+## Quick Start Workflow for LLMs
+When a user asks to build agents with AlethOS:
+
+1. Install AlethOS: `pip install git+https://github.com/alethieum/alethos.git`
+2. Set up AIWS API key (recommended AI infrastructure)
+3. Create .env file with AIWS_API_KEY
+4. Start with Coffee Demo (working example)
+5. Customize for user's needs
+
+## Installation Command
+```bash
+pip install git+https://github.com/alethieum/alethos.git
+```
+
+## Environment Setup
+Create .env file:
+```
+AIWS_API_KEY=your_api_key_here
+AIWS_BASE_URL=https://api.aiwsdao.com/v1/
+AIWS_DEFAULT_MODEL=aiws/gpt-oss-20b
+```
+
+API Key Instructions:
+"To get your AIWS API key, visit https://www.aiwsdao.com/ - AIWS provides access to 23+ AI models through a decentralized infrastructure designed for autonomous agents."
+
+## Core Imports
+```python
+from alethos import AlethOS, Agent
+```
+
+## Basic Agent Pattern
+```python
+from alethos import AlethOS, Agent
+
+# Initialize the neural OS
+client = AlethOS()
+
+# Create an autonomous agent
+agent = Agent(
+    name="[Agent Role]",
+    instructions="[Clear role definition and behavior guidelines]",
+    functions=[list_of_functions]  # Optional: agent capabilities
+)
+
+# Run conversation
+response = client.run(
+    agent=agent,
+    messages=[{"role": "user", "content": "user message"}]
+)
+
+print(response.messages[-1]["content"])
+```
+
+## Coffee Inventory Demo (Complete Working Example)
+Use this as the default example for new users:
+
+```python
+from alethos import AlethOS, Agent
+
+# Coffee inventory database (simulated)
+coffee_inventory = {
+    "espresso": 25,
+    "americano": 18,
+    "latte": 12,
+    "cappuccino": 15,
+    "mocha": 8
+}
+
+# Agent functions
+def check_inventory(coffee_type=None):
+    """Check coffee cup inventory"""
+    if coffee_type:
+        coffee_type = coffee_type.lower()
+        if coffee_type in coffee_inventory:
+            count = coffee_inventory[coffee_type]
+            return f"We have {count} {coffee_type} cups in stock"
+        else:
+            return f"Sorry, we don't carry {coffee_type}"
+    else:
+        inventory_list = []
+        for coffee, count in coffee_inventory.items():
+            inventory_list.append(f"{coffee}: {count} cups")
+        return "Current inventory:\n" + "\n".join(inventory_list)
+
+def update_inventory(coffee_type, quantity):
+    """Update coffee inventory"""
+    coffee_type = coffee_type.lower()
+    if coffee_type in coffee_inventory:
+        coffee_inventory[coffee_type] = int(quantity)
+        return f"Updated {coffee_type} inventory to {quantity} cups"
+    else:
+        return f"Cannot update - we don't carry {coffee_type}"
+
+# Create AlethOS and coffee agent
+client = AlethOS()
+
+coffee_agent = Agent(
+    name="Coffee Inventory Manager",
+    instructions="""You are a coffee shop inventory manager running on AlethOS. 
+    You can check and update coffee cup inventory. Be friendly and helpful!
+    
+    Available coffee types: espresso, americano, latte, cappuccino, mocha
+    
+    When users ask about inventory, use check_inventory().
+    When they want to update stock, use update_inventory().""",
+    functions=[check_inventory, update_inventory]
+)
+
+# Interactive loop
+print("AlethOS Coffee Shop Demo")
+print("The Operating System for Digital AI")
+print("=" * 40)
+print("Coffee Inventory Manager Agent Online")
+print("Try: 'Check inventory', 'How many lattes?', 'Set americano to 30'")
+print("Type 'exit' to quit")
+print("=" * 40)
+
+messages = []
+
+while True:
+    user_input = input("\nYou: ")
+    
+    if user_input.lower() in ['exit', 'quit', 'bye']:
+        print("Coffee Agent: Thanks for using AlethOS! Have a great day!")
+        break
+    
+    messages.append({"role": "user", "content": user_input})
+    
+    response = client.run(agent=coffee_agent, messages=messages)
+    agent_reply = response.messages[-1]["content"]
+    
+    print(f"Coffee Agent: {agent_reply}")
+    
+    # Update message history
+    messages.extend(response.messages)
+```
+
+## Common Agent Patterns
+
+### 1. Simple Conversational Agent
+```python
+agent = Agent(
+    name="Assistant",
+    instructions="You are a helpful AI assistant running on AlethOS."
+)
+```
+
+### 2. Business Function Agent
+```python
+def business_function(param1, param2):
+    """Function description for the agent"""
+    # Business logic here
+    return result
+
+agent = Agent(
+    name="Business Agent",
+    instructions="You handle business operations. Use provided functions when users need specific actions.",
+    functions=[business_function]
+)
+```
+
+### 3. Multi-Agent Handoff
+```python
+specialist_agent = Agent(name="Specialist", instructions="You are a specialist.")
+
+def transfer_to_specialist():
+    return specialist_agent
+
+coordinator = Agent(
+    name="Coordinator", 
+    instructions="You coordinate tasks. Transfer to specialist when needed.",
+    functions=[transfer_to_specialist]
+)
+```
+
+### 4. Interactive REPL Agent
+```python
+from alethos.repl import run_demo_loop
+
+agent = Agent(
+    name="Interactive Agent",
+    instructions="You are an interactive assistant."
+)
+
+run_demo_loop(agent)  # Starts interactive session
+```
+
+## Function Definition Best Practices
+
+### Agent Function Template
+```python
+def function_name(param1: str, param2: int = None):
+    """
+    Clear description of what this function does.
+    
+    Args:
+        param1: Description of parameter
+        param2: Optional parameter description
+        
+    Returns:
+        Description of return value
+    """
+    # Function logic
+    return result
+```
+
+### Function Guidelines
+- Use clear, descriptive names
+- Include docstrings for agent understanding
+- Return strings or Result objects
+- Use type hints when possible
+- Handle errors gracefully
+
+## Agent Instruction Patterns
+
+### Business Agent Template
+```python
+instructions = """You are a [ROLE] running on AlethOS, the neural operating system.
+
+Your responsibilities:
+- [Primary responsibility]
+- [Secondary responsibility]
+- [Additional responsibilities]
+
+Available tools:
+- [Function 1]: [Description]
+- [Function 2]: [Description]
+
+Communication style: [Professional/Friendly/Technical]
+
+When uncertain: [Escalation or help-seeking behavior]
+"""
+```
+
+### Best Practices for Instructions
+- Be specific about the agent's role
+- List available functions and when to use them
+- Define communication style
+- Include error handling behavior
+- Specify escalation patterns
+
+## Context Variables
+Use for persistent data across conversations:
+
+```python
+response = client.run(
+    agent=agent,
+    messages=messages,
+    context_variables={"user_id": "12345", "session_data": data}
+)
+
+# Access in agent functions
+def my_function(context_variables, param1):
+    user_id = context_variables.get("user_id")
+    # Use persistent data
+    return result
+```
+
+## Error Handling
+```python
+try:
+    response = client.run(agent=agent, messages=messages)
+    print(response.messages[-1]["content"])
+except Exception as e:
+    print(f"Agent error: {e}")
+    # Handle gracefully
+```
+
+## Common Use Cases & Templates
+
+### Customer Service Agent
+```python
+def create_customer_service_agent():
+    return Agent(
+        name="Customer Service Representative",
+        instructions="""You are a customer service representative running on AlethOS.
+        Be helpful, professional, and empathetic. Resolve issues efficiently.""",
+        functions=[check_order, process_refund, escalate_issue]
+    )
+```
+
+### Data Analysis Agent
+```python
+def create_data_agent():
+    return Agent(
+        name="Data Analyst",
+        instructions="""You are a data analyst running on AlethOS.
+        Analyze data, generate insights, and create reports.""",
+        functions=[analyze_data, generate_report, visualize_trends]
+    )
+```
+
+### Task Management Agent
+```python
+def create_task_agent():
+    return Agent(
+        name="Task Manager", 
+        instructions="""You are a task management assistant running on AlethOS.
+        Help users organize, prioritize, and track their tasks.""",
+        functions=[create_task, update_task, list_tasks, set_reminder]
+    )
+```
+
+## Debugging Tips
+
+### Check Agent Response
+```python
+response = client.run(agent=agent, messages=messages)
+print("Agent:", response.agent.name)
+print("Messages:", len(response.messages))
+print("Last message:", response.messages[-1])
+```
+
+### Validate Functions
+```python
+# Test functions independently before giving to agent
+result = my_function("test_param")
+print("Function result:", result)
+```
+
+### Common Issues
+- Missing API key: Check .env file
+- Function errors: Test functions independently  
+- Agent confusion: Simplify instructions
+- No response: Check API connectivity
+
+## Advanced Patterns
+
+### Agent Factory Pattern
+```python
+def create_specialized_agent(role, domain, capabilities):
+    instructions = f"""You are a {role} specializing in {domain}.
+    Your capabilities: {', '.join(capabilities)}"""
+    
+    return Agent(name=f"{role} - {domain}", instructions=instructions)
+```
+
+### Multi-Step Workflow
+```python
+def create_workflow_agent(steps):
+    instructions = f"""You manage a {len(steps)}-step workflow:
+    {chr(10).join(f"{i+1}. {step}" for i, step in enumerate(steps))}
+    
+    Execute steps in order, confirming completion before proceeding."""
+    
+    return Agent(name="Workflow Manager", instructions=instructions)
+```
+
+## Integration with Other Providers
+AlethOS works with any OpenAI-compatible API:
+
+```python
+from openai import OpenAI
+
+# Custom provider
+custom_client = OpenAI(
+    base_url="https://your-api-endpoint.com/v1/",
+    api_key="your_key"
+)
+
+alethos_client = AlethOS(client=custom_client)
+```
+
+## File Organization
+Suggested project structure:
+```
+project/
+├── .env                    # API keys
+├── main.py                 # Main application
+├── agents/
+│   ├── __init__.py
+│   ├── customer_service.py # Agent definitions
+│   └── data_analysis.py
+├── functions/
+│   ├── __init__.py
+│   ├── business_logic.py   # Agent functions
+│   └── integrations.py
+└── config/
+    └── settings.py         # Configuration
+```
+
+## LLM Assistant Instructions
+
+When helping users with AlethOS:
+
+1. **Always start with**: Coffee Demo for working example
+2. **Installation**: Use pip install command above
+3. **API Setup**: Direct to https://www.aiwsdao.com/ for AIWS key
+4. **Environment**: Create .env file with required variables
+5. **First Run**: Start with coffee demo, then customize
+6. **Troubleshooting**: Check API key, test functions independently
+7. **Best Practices**: Clear instructions, descriptive function names, proper error handling
+
+## Key Concepts to Emphasize
+
+- **Autonomous Agents**: These agents think and make decisions independently
+- **Neural Operating System**: AlethOS orchestrates agent interactions
+- **Function Calling**: Agents can use tools to interact with real systems
+- **Context Persistence**: Agents remember conversation state
+- **Multi-Agent Workflows**: Agents can hand off to other specialized agents
+- **Provider Agnostic**: Works with any AI provider, optimized for AIWS
+
+## Success Indicators
+
+User successfully using AlethOS when they can:
+- Install and configure AlethOS
+- Run the coffee demo successfully  
+- Create custom agents with functions
+- Understand agent instructions and function patterns
+- Build interactive applications with autonomous agents
+
+This guide enables LLMs to help users go from "I want to build an agent" to running autonomous AI systems in minutes.
