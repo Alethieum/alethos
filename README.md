@@ -28,32 +28,7 @@ cd alethos
 pip install -e .
 ```
 
-## AIWS: Recommended Infrastructure for Autonomous AI
-
-AlethOS works with any AI provider, but we recommend AIWS (AI Web Services) - a decentralized AI infrastructure platform designed specifically for the autonomous agent economy.
-
-**AIWS Agent Intelligence Gateway** provides seamless access to diverse AI models through a unified API, making it the ideal infrastructure choice for AlethOS agents that need to independently select and utilize optimal intelligence capabilities.
-
-### Key Features
-
-**Universal AI Access**: Single API endpoint for 23+ models with more being added continuously
-
-**Agent-First Design**: Purpose-built for autonomous AI agents and agentic workflows  
-
-**Decentralized Infrastructure**: Models deployed across distributed node network
-
-**Economic Autonomy**: AI agents can independently select and pay for optimal models
-
-**Permissionless Integration**: No gatekeepers - agents choose their own intelligence stack
-
-### Get Started with AIWS (Recommended)
-
-1. **Get your API key**: Visit [https://www.aiwsdao.com/](https://www.aiwsdao.com/)
-2. **Single endpoint**: `https://api.aiwsdao.com/v1/`  
-3. **23+ models**: Access leading open and closed source models
-4. **Built for agents**: Optimized for autonomous AI workflows
-
-*Note: AlethOS also works with OpenAI, Anthropic, or any OpenAI-compatible API provider.*
+AlethOS also works with OpenAI, Anthropic, or any OpenAI-compatible API provider.
 
 ## Quick Start
 
@@ -63,12 +38,12 @@ After installation, copy the environment template and add your API key:
 
 ```shell
 cp .env.example .env
-# Edit .env and add your AIWS_API_KEY
+# Edit .env and add your API_KEY
 ```
 
 Or set the environment variable directly:
 ```shell
-export AIWS_API_KEY=your_api_key_here
+export API_KEY=your_api_key_here
 ```
 
 ### 2. Basic Usage
@@ -79,7 +54,7 @@ from alethos import AlethOS, Agent
 # AlethOS will automatically use your .env configuration
 client = AlethOS()
 
-# Create agents (model will default to aiws/gpt-oss-20b from .env)
+# Create agents (model will default to gpt-oss-20b from .env)
 agent = Agent(
     name="AlethOS Assistant",
     instructions="You are a helpful AI assistant powered by AlethOS.",
@@ -107,7 +82,7 @@ client = AlethOS()  # Uses .env file
 
 # Option 2: Custom configuration
 custom_client = OpenAI(
-    base_url="https://api.aiwsdao.com/v1/",
+    base_url="",
     api_key="your_api_key_here"
 )
 alethos = AlethOS(client=custom_client)
@@ -300,7 +275,7 @@ At its core, AlethOS uses two powerful abstractions: `Agent`s and **handoffs**. 
 
 **Fully Open**: Complete transparency and control over your AI agents and their interactions
 
-**Provider Agnostic**: Works with any AI provider, with seamless AIWS integration for optimal autonomous agent workflows
+**Provider Agnostic**: Works with any AI provider, with seamless integration for optimal autonomous agent workflows
 
 # Examples
 
@@ -327,8 +302,8 @@ from openai import OpenAI
 
 # Configure for Alethieum API
 client = OpenAI(
-    base_url="https://api.aiwsdao.com/api/v1/",
-    api_key="<AIWS_API_KEY>",
+    base_url="",
+    api_key="",
 )
 
 alethos_client = AlethOS(client=client)
